@@ -6,4 +6,5 @@ import lombok.Getter;
 public class BranchDTO {
     private String name;
     private CommitDTO commit;
+
 }

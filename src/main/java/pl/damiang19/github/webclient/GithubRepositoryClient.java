@@ -1,13 +1,12 @@
 package pl.damiang19.github.webclient;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import pl.damiang19.github.controller.errors.UserNotFoundException;
 import pl.damiang19.github.webclient.dto.BranchDTO;
 import pl.damiang19.github.webclient.dto.RepositoryDTO;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -24,14 +23,22 @@ public class GithubRepositoryClient {
     }
 
     public List<RepositoryDTO> getUserRepositories(String username) {
-        return createGithubQuery("users/{username}/repos",RepositoryDTO[].class, username );
+        List<RepositoryDTO> list = createGithubQuery("users/{username}/repos", RepositoryDTO[].class, username);
+        throwExceptionIfListIsEmpty(list, username);
+        return list;
+    }
+
+    private void throwExceptionIfListIsEmpty(List<RepositoryDTO> list, String username) {
+        if (list.isEmpty()) {
+            throw new UserNotFoundException("User with username " + username + " login not found");
+        }
     }
 
     public List<BranchDTO> getRepositoryBranches(String username, String repositoryName) {
         return createGithubQuery("repos/{username}/chat/branches", BranchDTO[].class, username, repositoryName);
     }
 
-    public <T>  List<T> createGithubQuery(String url, Class<T[]> responseType, Object... params) {
+    public <T> List<T> createGithubQuery(String url, Class<T[]> responseType, Object... params) {
         return Arrays.stream(Objects.requireNonNull(restTemplate.getForObject(GITHUB_URL + url, responseType, params)))
                 .collect(Collectors.toList());
     }
