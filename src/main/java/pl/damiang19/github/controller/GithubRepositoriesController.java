@@ -21,7 +21,8 @@ public class GithubRepositoriesController {
     @GetMapping("/{username}/repositories")
     public ResponseEntity<?> getRepositoriesForUser(@PathVariable String username, HttpServletRequest httpRequest)  {
         if(httpRequest.getHeader("accept").equals("application/xml")){
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).contentType(MediaType.APPLICATION_JSON).body(new ExceptionDTO("dsdsdsdsd", HttpStatus.NOT_ACCEPTABLE));
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).contentType(MediaType.APPLICATION_JSON)
+                    .body(new ExceptionDTO("Server can't handle application/xml accept header. Please use instead application/json", HttpStatus.NOT_ACCEPTABLE));
         }
         return ResponseEntity.ok(repositoryService.getRepositories(username));
     }
