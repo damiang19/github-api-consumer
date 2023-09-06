@@ -1,8 +1,8 @@
 # github-api-consumer
 Application to get information about github user repositories. 
 ### Endpoint to get repositories: 
-localhost:8080/{username}/repositories
-username - login from github
+1. localhost:8080/{username}/repositories
+2. username - login from github
  
 ### Result returns a list of repositories consisting of:
  1. name - name of repository 
