@@ -1,4 +1,4 @@
-package pl.damiang19.github.webclient.dto;
+package pl.damiang19.github.webclient.dto.request;
 
 import lombok.Getter;
 

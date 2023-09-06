@@ -16,6 +16,4 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
         return new ResponseEntity<>( new ExceptionDTO(ex.getMessage(), HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
     }
-
-
 }
